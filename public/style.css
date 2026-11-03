@@ -69,3 +69,4 @@ th { background: #fafbfe; color: var(--muted); font-weight: 600; }
   .meta { grid-template-columns: 1fr; }
   .hero h1 { font-size: 30px; }
 }
+.tags { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; }

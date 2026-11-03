@@ -1,11 +1,8 @@
 const bcrypt = require('bcryptjs');
 
 exports.seed = async (knex) => {
-  await knex('task_labels').del();
-  await knex('tasks').del();
-  await knex('labels').del();
-  await knex('statuses').del();
-  await knex('users').del();
+  // Полная очистка таблиц со сбросом счётчиков id
+  await knex.raw('TRUNCATE task_labels, tasks, labels, statuses, users RESTART IDENTITY CASCADE');
 
   const digest = (p) => bcrypt.hashSync(p, 10);
   const [admin, user] = await knex('users').insert([
