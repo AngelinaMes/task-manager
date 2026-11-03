@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+<h1><%= title %></h1>
+<% const isAdmin = currentUser.role === 'admin'; %>
+<% if (isAdmin) { %>
+<form action="/<%= path %>" method="post" class="card form form-row">
+  <input name="name" placeholder="Новое название" value="<%= values.name || '' %>">
+  <button class="btn">Добавить</button>
+  <%- include('partials/field-error', { name: 'name', errors }) %>
+</form>
+<% } else { %>
+<p class="muted">Изменять справочник может только администратор.</p>
+<% } %>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>ID</th><th>Название</th><th>Создан</th><% if (isAdmin) { %><th></th><% } %></tr></thead>
+  <tbody>
+  <% items.forEach((item) => { %>
+    <tr>
+      <td data-label="ID"><%= item.id %></td>
+      <td data-label="Название">
+        <% if (isAdmin) { %>
+        <form action="/<%= path %>/<%= item.id %>?_method=PATCH" method="post" class="inline-edit">
+          <input name="name" value="<%= item.name %>"><button class="link">Сохранить</button>
+        </form>
+        <% } else { %><%= item.name %><% } %>
+      </td>
+      <td data-label="Создан"><%= item.created_at.toLocaleDateString('ru-RU') %></td>
+      <% if (isAdmin) { %>
+      <td class="actions">
+        <form action="/<%= path %>/<%= item.id %>?_method=DELETE" method="post" class="inline"><button class="link danger">Удалить</button></form>
+      </td>
+      <% } %>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('partials/footer') %>
