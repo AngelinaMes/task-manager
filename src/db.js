@@ -1,5 +1,9 @@
 const knex = require('knex');
-const { Pool } = require('pg');
+const { Pool, types } = require('pg');
+
+// Тип DATE (OID 1082) отдаём строкой YYYY-MM-DD: иначе pg создаёт Date в локальном
+// часовом поясе сервера и при переводе в UTC срок «сдвигается» на день назад.
+types.setTypeParser(1082, (value) => value);
 const config = require('../knexfile');
 
 const env = process.env.NODE_ENV || 'development';

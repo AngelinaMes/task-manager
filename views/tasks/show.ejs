@@ -8,7 +8,7 @@
   <dl class="meta">
     <dt>Автор</dt><dd><%= task.creator_name %></dd>
     <dt>Исполнитель</dt><dd><%= task.executor_name || '—' %></dd>
-    <dt>Срок</dt><dd><%= task.due_date ? task.due_date.toLocaleDateString('ru-RU') : '—' %></dd>
+    <dt>Срок</dt><dd><%= task.due_date ? task.due_date.split('-').reverse().join('.') : '—' %></dd>
     <dt>Создана</dt><dd><%= task.created_at.toLocaleString('ru-RU') %></dd>
     <dt>Метки</dt><dd><% task.labels.forEach((l) => { %><span class="tag"><%= l.name %></span><% }) %></dd>
   </dl>

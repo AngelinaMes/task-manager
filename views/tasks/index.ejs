@@ -37,7 +37,7 @@
       <td data-label="Автор"><%= t.creator_name %></td>
       <td data-label="Исполнитель"><%= t.executor_name || '—' %></td>
       <td data-label="Метки"><span class="tags"><% t.labels.forEach((l) => { %><span class="tag"><%= l.name %></span><% }) %></span></td>
-      <td data-label="Срок"><%= t.due_date ? t.due_date.toLocaleDateString('ru-RU') : '—' %></td>
+      <td data-label="Срок"><%= t.due_date ? t.due_date.split('-').reverse().join('.') : '—' %></td>
     </tr>
   <% }) %>
   </tbody>

@@ -19,7 +19,7 @@ const toValues = (task) => ({
   description: task.description || '',
   statusId: task.status_id,
   executorId: task.executor_id || '',
-  dueDate: task.due_date ? task.due_date.toISOString().slice(0, 10) : '',
+  dueDate: task.due_date || '',
   labelIds: task.labels.map((l) => l.id),
 });
 

@@ -130,6 +130,13 @@ describe('REST API', () => {
     expect(res.body.name).toBe('Из API');
   });
 
+  test('срок задачи не сдвигается из-за часового пояса', async () => {
+    const agent = await login();
+    const task = await db('tasks').where({ name: 'Настроить CI' }).first();
+    const res = await agent.get(`/api/tasks/${task.id}`).expect(200);
+    expect(res.body.dueDate).toBe('2026-11-15');
+  });
+
   test('POST /api/tasks с ошибкой — 422', async () => {
     const agent = await login();
     const res = await agent.post('/api/tasks').send({}).expect(422);
