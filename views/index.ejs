@@ -1,0 +1,12 @@
+<%- include('partials/header') %>
+<section class="hero">
+  <h1>Менеджер задач</h1>
+  <p>Создавайте задачи, назначайте исполнителей, отслеживайте статусы и фильтруйте по меткам.</p>
+  <% if (currentUser) { %>
+    <a class="btn" href="/tasks">Перейти к задачам</a>
+  <% } else { %>
+    <a class="btn" href="/session/new">Войти</a>
+    <a class="btn btn-secondary" href="/users/new">Зарегистрироваться</a>
+  <% } %>
+</section>
+<%- include('partials/footer') %>

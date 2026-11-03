@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Менеджер задач</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">Менеджер задач</a>
+  <input type="checkbox" id="menu-toggle" class="menu-toggle">
+  <label for="menu-toggle" class="burger" aria-label="Меню">☰</label>
+  <nav class="nav">
+    <% if (currentUser) { %>
+      <a href="/tasks">Задачи</a>
+      <a href="/statuses">Статусы</a>
+      <a href="/labels">Метки</a>
+      <a href="/users">Пользователи</a>
+      <span class="who"><%= currentUser.first_name %><%= currentUser.role === 'admin' ? ' (админ)' : '' %></span>
+      <form action="/session?_method=DELETE" method="post" class="inline">
+        <button class="link">Выход</button>
+      </form>
+    <% } else { %>
+      <a href="/session/new">Вход</a>
+      <a href="/users/new">Регистрация</a>
+    <% } %>
+  </nav>
+</header>
+<main class="container">
+<% if (flash) { %>
+  <div class="flash flash-<%= flash.type %>"><%= flash.text %></div>
+<% } %>

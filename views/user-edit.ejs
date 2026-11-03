@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+<h1>Профиль: <%= user.first_name %> <%= user.last_name %></h1>
+<form action="/users/<%= user.id %>?_method=PATCH" method="post" class="card form">
+  <label>Имя <input name="firstName" value="<%= values.firstName || '' %>"></label>
+  <%- include('partials/field-error', { name: 'firstName', errors }) %>
+  <label>Фамилия <input name="lastName" value="<%= values.lastName || '' %>"></label>
+  <%- include('partials/field-error', { name: 'lastName', errors }) %>
+  <label>Email <input type="email" name="email" value="<%= values.email || '' %>"></label>
+  <%- include('partials/field-error', { name: 'email', errors }) %>
+  <label>Новый пароль (необязательно) <input type="password" name="password"></label>
+  <%- include('partials/field-error', { name: 'password', errors }) %>
+  <button class="btn">Сохранить</button>
+</form>
+<%- include('partials/footer') %>
