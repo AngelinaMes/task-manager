@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 
 const ssl = process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false;
 
