@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+<article class="card task">
+  <div class="page-head">
+    <h1><%= task.name %></h1>
+    <span class="badge"><%= task.status_name %></span>
+  </div>
+  <p><%= task.description || 'Без описания' %></p>
+  <dl class="meta">
+    <dt>Автор</dt><dd><%= task.creator_name %></dd>
+    <dt>Исполнитель</dt><dd><%= task.executor_name || '—' %></dd>
+    <dt>Срок</dt><dd><%= task.due_date ? task.due_date.toLocaleDateString('ru-RU') : '—' %></dd>
+    <dt>Создана</dt><dd><%= task.created_at.toLocaleString('ru-RU') %></dd>
+    <dt>Метки</dt><dd><% task.labels.forEach((l) => { %><span class="tag"><%= l.name %></span><% }) %></dd>
+  </dl>
+  <div class="actions">
+    <a class="btn" href="/tasks/<%= task.id %>/edit">Изменить</a>
+    <form action="/tasks/<%= task.id %>?_method=DELETE" method="post" class="inline"><button class="btn btn-danger">Удалить</button></form>
+  </div>
+</article>
+<%- include('../partials/footer') %>

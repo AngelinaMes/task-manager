@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+<h1><%= task ? 'Изменение задачи' : 'Новая задача' %></h1>
+<form action="<%= task ? `/tasks/${task.id}?_method=PATCH` : '/tasks' %>" method="post" class="card form">
+  <label>Название <input name="name" value="<%= values.name || '' %>"></label>
+  <%- include('../partials/field-error', { name: 'name', errors }) %>
+  <label>Описание <textarea name="description" rows="4"><%= values.description || '' %></textarea></label>
+  <label>Статус
+    <select name="statusId"><option value="">—</option>
+      <% statuses.forEach((s) => { %><option value="<%= s.id %>" <%= String(values.statusId) === String(s.id) ? 'selected' : '' %>><%= s.name %></option><% }) %>
+    </select>
+  </label>
+  <%- include('../partials/field-error', { name: 'statusId', errors }) %>
+  <label>Исполнитель
+    <select name="executorId"><option value="">Не назначен</option>
+      <% users.forEach((u) => { %><option value="<%= u.id %>" <%= String(values.executorId) === String(u.id) ? 'selected' : '' %>><%= u.first_name %> <%= u.last_name %></option><% }) %>
+    </select>
+  </label>
+  <label>Срок <input type="date" name="dueDate" value="<%= values.dueDate || '' %>"></label>
+  <%- include('../partials/field-error', { name: 'dueDate', errors }) %>
+  <fieldset><legend>Метки</legend>
+    <% labels.forEach((l) => { %>
+      <label class="check"><input type="checkbox" name="labelIds" value="<%= l.id %>" <%= (values.labelIds || []).map(Number).includes(l.id) ? 'checked' : '' %>> <%= l.name %></label>
+    <% }) %>
+  </fieldset>
+  <button class="btn"><%= task ? 'Сохранить' : 'Создать' %></button>
+</form>
+<%- include('../partials/footer') %>

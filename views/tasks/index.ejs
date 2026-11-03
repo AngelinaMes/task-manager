@@ -1,0 +1,47 @@
+<%- include('../partials/header') %>
+<div class="page-head">
+  <h1>Задачи</h1>
+  <a class="btn" href="/tasks/new">Создать задачу</a>
+</div>
+<form method="get" action="/tasks" class="card filters">
+  <label>Статус
+    <select name="status"><option value="">Все</option>
+      <% statuses.forEach((s) => { %><option value="<%= s.id %>" <%= String(filter.statusId) === String(s.id) ? 'selected' : '' %>><%= s.name %></option><% }) %>
+    </select>
+  </label>
+  <label>Исполнитель
+    <select name="executor"><option value="">Все</option>
+      <% users.forEach((u) => { %><option value="<%= u.id %>" <%= String(filter.executorId) === String(u.id) ? 'selected' : '' %>><%= u.first_name %> <%= u.last_name %></option><% }) %>
+    </select>
+  </label>
+  <label>Метка
+    <select name="label"><option value="">Все</option>
+      <% labels.forEach((l) => { %><option value="<%= l.id %>" <%= String(filter.labelId) === String(l.id) ? 'selected' : '' %>><%= l.name %></option><% }) %>
+    </select>
+  </label>
+  <label class="check"><input type="checkbox" name="isCreatorUser" <%= filter.onlyMine ? 'checked' : '' %>> Только мои</label>
+  <button class="btn">Показать</button>
+</form>
+<% if (tasks.length === 0) { %>
+  <p class="muted">Задач не найдено.</p>
+<% } else { %>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>ID</th><th>Название</th><th>Статус</th><th>Автор</th><th>Исполнитель</th><th>Метки</th><th>Срок</th></tr></thead>
+  <tbody>
+  <% tasks.forEach((t) => { %>
+    <tr>
+      <td data-label="ID"><%= t.id %></td>
+      <td data-label="Название"><a href="/tasks/<%= t.id %>"><%= t.name %></a></td>
+      <td data-label="Статус"><span class="badge"><%= t.status_name %></span></td>
+      <td data-label="Автор"><%= t.creator_name %></td>
+      <td data-label="Исполнитель"><%= t.executor_name || '—' %></td>
+      <td data-label="Метки"><% t.labels.forEach((l) => { %><span class="tag"><%= l.name %></span><% }) %></td>
+      <td data-label="Срок"><%= t.due_date ? t.due_date.toLocaleDateString('ru-RU') : '—' %></td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<% } %>
+<%- include('../partials/footer') %>
